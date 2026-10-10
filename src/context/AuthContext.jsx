@@ -42,7 +42,10 @@ export const AuthProvider = ({ children }) => {
         _setSession(newToken, userInfo);
         return { success: true, message: res.data.message, user: userInfo };
       }
-      return { success: false, message: 'Registration failed' };
+
+      const msg = res.data?.message || 'Registration failed. Please try again.';
+      setError(msg);
+      return { success: false, message: msg };
     } catch (err) {
       const msg = err.response?.data?.message || 'Registration failed. Please try again.';
       setError(msg);
@@ -60,7 +63,10 @@ export const AuthProvider = ({ children }) => {
         _setSession(newToken, userInfo);
         return { success: true, message: res.data.message, user: userInfo };
       }
-      return { success: false, message: 'Login failed' };
+
+      const msg = res.data?.message || 'Login failed. Please check your credentials.';
+      setError(msg);
+      return { success: false, message: msg };
     } catch (err) {
       const msg = err.response?.data?.message || 'Login failed. Please check your credentials.';
       setError(msg);
