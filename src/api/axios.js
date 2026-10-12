@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const rawBaseURL = import.meta.env.VITE_API_BASE_URL || '';
-if (!rawBaseURL) {
-  console.warn('[ShareMyMeal] VITE_API_BASE_URL is not set. API calls may fail. Set it in your .env or deployment environment variables.');
-}
+// Default to the deployed Render backend URL so the app works out-of-the-box
+// both in production on Render and whenever VITE_API_BASE_URL is not explicitly set
+const DEFAULT_API_URL = 'https://sharemyme-backend.onrender.com/api';
+const rawBaseURL = import.meta.env.VITE_API_BASE_URL || DEFAULT_API_URL;
+
 // Clean trailing slashes and ensure /api is properly appended
 let cleanBaseURL = rawBaseURL.trim().replace(/\/+$/, '');
-if (cleanBaseURL && !cleanBaseURL.endsWith('/api')) {
+if (!cleanBaseURL.endsWith('/api')) {
   cleanBaseURL = `${cleanBaseURL}/api`;
 }
 
