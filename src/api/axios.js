@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-const rawBaseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+const rawBaseURL = import.meta.env.VITE_API_BASE_URL || '';
+if (!rawBaseURL) {
+  console.warn('[ShareMyMeal] VITE_API_BASE_URL is not set. API calls may fail. Set it in your .env or deployment environment variables.');
+}
 // Clean trailing slashes and ensure /api is properly appended
 let cleanBaseURL = rawBaseURL.trim().replace(/\/+$/, '');
-if (!cleanBaseURL.endsWith('/api')) {
+if (cleanBaseURL && !cleanBaseURL.endsWith('/api')) {
   cleanBaseURL = `${cleanBaseURL}/api`;
 }
 
